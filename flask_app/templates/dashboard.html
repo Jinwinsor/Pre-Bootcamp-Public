@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We' crossorigin='anonymous'>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js' integrity='sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj' crossorigin='anonymous'></script>
+    <link rel='stylesheet' href="{{ url_for('static', filename='/css/style.css') }}">
+    <title>Recipe Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-end">
+            <a href="/recipes/create" class="btn btn-secondary offset-2 col-2">Create</a>
+            <a href="/logout" class="btn btn-secondary offset-1 col-1">Logout</a>
+        </div>
+        <h1 class="text-center">Hello {{user.first_name}} {{user.last_name}}</h1>
+        <div>
+            <h2>Your recipes</h2>
+            <table class="table table-wite text-dark text-center">
+                <thead>
+                    <tr>
+                        <th class="fs-4">Recipe Name</th>
+                        <th class="fs-4">Under 30 minutes?</th>
+                        <th class="fs-4">Posted by</th>
+                        <th class="fs-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>  
+                    {% for recipe in recipes %}
+                        <tr>
+                            <td class="fs-5">{{recipe.name}}</td>
+                            <td class="fs-5">
+                                {% if recipe.under_30 == 1 %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </td>
+                            <td class="fs-5">{{recipe.owner.first_name}}</td>
+                            <td class="fs-5">
+         <!-- *[Important] Each recipe is owned by specific user. So, the user_id has to be matched!! -->
+                                <a href="/recipes/show/{{recipe.id}}" class="btn btn-warning">View Instructions</a>
+                                {% if session['user_id'] == recipe.owner.id %} 
+                                    <a href="/recipes/edit/{{recipe.id}}" class="btn btn-warning">Edit</a>
+                                    <a href="/recipes/delete/{{recipe.id}}" class="btn btn-danger">Delete</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

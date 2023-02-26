@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Recipes</title>
+</head>
+<body>
+    <div class="d-flex justify-content-end">
+        <a href="/recipes_dash" class="btn btn-secondary offset-2 col-1">Go back </a>
+        <a href="/logout" class="btn btn-secondary offset-1 col-1">logout</a>
+    </div>
+
+
+    <div class="d-inline p-2">        
+        <h1 class="text-center" id="edit_h1">Edit Recipe!</h1>
+    </div>
+    <div class="p-2 text-center  ">
+        {% with messages = get_flashed_messages(category_filter=["error"]) %}    
+            {% if messages %}                          
+                {% for message in messages %}            
+                <div class="alert alert-danger" role="alert">
+                    <p>{{message}}</p> 
+                </div>              
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="d-flex flex-wrap justify-content-around" id="edit_container">
+        <form action="/recipes/edit/update/{{recipe.id}}" method="post" class="col-6 p-3 bg-light text-dark">
+            <div class="form-group">
+                <label for="name">Recipe Name</label>
+                <input type="text" name="name" id="name" class="form-control" value="{{recipe.name}}">
+            </div>
+            <div class="form-group">
+                <label for="description">Description for the recipe</label>
+                <textarea type="text" name="description" class="form-control">{{recipe.description}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="instructions">Instructions for the recipe</label>
+                <textarea type="text" name="instructions" class="form-control" >{{recipe.instructions}}</textarea>
+            </div>
+
+            <!-- ** "textarea" for flask ==> It doesn't show in value. for input, fill flask in value and it works,
+            but "textarea" doesn't work like "input".
+            Example)   
+            <textarea  name="message" type="text" placeholder="Your message" 
+            class="form-control"> double_curly brackets - message - double_curly brackets </textarea> -->
+                <!-- ==================== DATE PICKER AND RADIOS ======================= -->
+            <div class="card col-6">
+                <div class="card-body">
+                    <div class="form-group">
+                        <h3>Date Cooked/Made:</h3>
+                        <label for="date_made"></label>
+                        <input type="date" name="date_made" id="date_made" value="{{recipe.date_made}}">
+                    </div>
+
+                    <h3>Under 30 minutes?</h3>
+                    <div class="form-check">
+                        <label class="form-check-label" name="under_30" for="under_30">
+                        <input type="radio" value="1" name="under_30" id="under_30" class="form-check-input" 
+                        {% if recipe.under_30 == 1 %}
+                        checked
+                        {% endif %}>
+                        Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" name="under_30"  for="under_30">
+                        <input type="radio" value="0" name="under_30" id="under_30" class="form-check-input" 
+                        {% if recipe.under_30 == 0 %}
+                        checked
+                        {% endif %}>
+                        No
+                        </label>
+                    </div>
+                    <input type="submit" value="Update" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

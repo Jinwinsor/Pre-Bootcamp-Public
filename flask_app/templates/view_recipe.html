@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
+    <title>Recipe Share</title>
+</head>
+<body>
+
+
+    <div class="headline">
+        <div class="d-flex justify-content-end">
+            <a href="/recipes_dash" type="button" class="btn btn-secondary offset-2 col-1">Go back</a>
+            <a href="/logout" type="button" class="btn btn-secondary offset-2 col-1">logout</a>
+        </div>
+    </div>
+<br>
+<br>
+    <div class="card text-black" id="show_bg">
+        <div class="card-header  text-center">
+            <h2>Recipe Name: {{recipe.name}}</h2>
+            <h3 class="card-title">Posted by: {{recipe.owner.first_name}} </h3>
+        </div>
+        <!-- <hr class="bg-white"/> -->
+        <div class="card-body row">
+            <h3 class="col-4 card-text">Description:</h3>
+            <h3 class="col-8 card-text"> {{recipe.description}}</h3>
+
+            <h3 class="col-4 card-text">Under 30 munutes? </h3>
+            <h3 class="col-8 card-text">
+                {% if recipe.under_30 == 1 %}
+                Yes
+                {% else %} 
+                NO 
+                {% endif %}
+            </h3>
+
+            <h3 class="col-4 card-text">Instructions</h3>
+            <h3 class="col-8 card-text">{{recipe.instructions}}</h3>
+
+            <h3 class="col-4 card-text">Date Made: </h3>
+            <h3 class="col-8 card-text">{{recipe.date_made}}</h3>
+        </div>
+    </div>
+
+</body>
+</html>

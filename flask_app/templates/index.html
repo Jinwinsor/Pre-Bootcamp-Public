@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+    <title>Recipe Share</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 mb-5">
+         
+         <!-- Registration -->
+        <div class="card shadow p-5 animated zoomIn slow">
+        <h3 class="text-center font-weight-bold text-uppercase mb-3">SIGN UP</h3>
+
+        {% with messages = get_flashed_messages(category_filter=['register']) %}
+          {% if messages %}                          
+            {% for message in messages %}            
+                <div class="alert alert-dark" role="alert">
+                  <p>{{message}}</p>  
+                </div>          
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+
+          <form action="/user/register", method="post">
+            <div class="form-group">
+              <label for="first_name">First Name:</label>
+              <input type="text" name="first_name" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="last_name">Last Name:</label>
+              <input type="text"  name="last_name" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="text"  name="email" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="confirm_password">Confirm Password</label>
+              <input type="password" name="confirm_password" class="form-control">
+            </div>
+            <input type="submit" value="Submit" class="btn btn-outline-dark btn-block rounded-pill"></input>
+          </form>
+      
+        </div>
+      </div> 
+      
+      <!-- ========================= LOG IN PAGE =============================== -->
+    
+        <div class="col-md-6 mb-5">
+        
+        <!-- Login-->
+        <div class="card shadow animated zoomIn slow p-5">
+        <h3 class="text-center font-weight-bold text-uppercase mb-3">Login</h3>
+
+        {% with messages = get_flashed_messages(category_filter=['login']) %}    
+          {% if messages %}                          
+            {% for message in messages %}            
+              <div class="alert alert-danger" role="alert">
+                <p>{{message}}</p> 
+              </div>              
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        <form action="/user/login" method="post">
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" name="email" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control">
+          </div>
+           
+          <input type="submit" value="Submit" class="btn btn-outline-dark btn-block rounded-pill"></input>
+          </form>
+          <div class="text-center">
+            <i class="fab fa-facebook mx-2 fa-2x"></i>
+            <i class="fab fa-twitter  mx-2 fa-2x"></i>
+            <i class="fab fa-instagram  mx-2 fa-2x"></i>
+            <i class="fab fa-google  mx-2 fa-2x"></i>
+          </div>
+     
+        </div>
+      </div>
+    
+    </div>
+  </div>
+</body>
+</html>
